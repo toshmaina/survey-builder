@@ -1,0 +1,127 @@
+/* ---------- Local Fonts: Asap, Inter, Lexend Deca ----------
+   Files live in assets/fonts/, this stylesheet lives in css/,
+   so paths below are relative (../assets/fonts/...). Same font
+   set and structure as the Tatua site stylesheet. */
+
+/* Asap — Regular / Medium / SemiBold / Bold + italics */
+@font-face {
+  font-family: 'Asap';
+  src: url('../assets/fonts/asap/Asap-Regular.woff2') format('woff2'),
+       url('../assets/fonts/asap/Asap-Regular.woff') format('woff'),
+       url('../assets/fonts/asap/Asap-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Asap';
+  src: url('../assets/fonts/asap/Asap-Italic.woff2') format('woff2'),
+       url('../assets/fonts/asap/Asap-Italic.woff') format('woff'),
+       url('../assets/fonts/asap/Asap-Italic.ttf') format('truetype');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Asap';
+  src: url('../assets/fonts/asap/Asap-Medium.woff2') format('woff2'),
+       url('../assets/fonts/asap/Asap-Medium.woff') format('woff'),
+       url('../assets/fonts/asap/Asap-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Asap';
+  src: url('../assets/fonts/asap/Asap-MediumItalic.woff2') format('woff2'),
+       url('../assets/fonts/asap/Asap-MediumItalic.woff') format('woff'),
+       url('../assets/fonts/asap/Asap-MediumItalic.ttf') format('truetype');
+  font-weight: 500;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Asap';
+  src: url('../assets/fonts/asap/Asap-SemiBold.woff2') format('woff2'),
+       url('../assets/fonts/asap/Asap-SemiBold.woff') format('woff'),
+       url('../assets/fonts/asap/Asap-SemiBold.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Asap';
+  src: url('../assets/fonts/asap/Asap-SemiBoldItalic.woff2') format('woff2'),
+       url('../assets/fonts/asap/Asap-SemiBoldItalic.woff') format('woff'),
+       url('../assets/fonts/asap/Asap-SemiBoldItalic.ttf') format('truetype');
+  font-weight: 600;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Asap';
+  src: url('../assets/fonts/asap/Asap-Bold.woff2') format('woff2'),
+       url('../assets/fonts/asap/Asap-Bold.woff') format('woff'),
+       url('../assets/fonts/asap/Asap-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Asap';
+  src: url('../assets/fonts/asap/Asap-BoldItalic.woff2') format('woff2'),
+       url('../assets/fonts/asap/Asap-BoldItalic.woff') format('woff'),
+       url('../assets/fonts/asap/Asap-BoldItalic.ttf') format('truetype');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* Inter — 400 / 600 / 700 */
+@font-face {
+  font-family: 'Inter';
+  src: url('../assets/fonts/inter/Inter-Regular.woff2') format('woff2'),
+       url('../assets/fonts/inter/Inter-Regular.woff') format('woff'),
+       url('../assets/fonts/inter/Inter-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('../assets/fonts/inter/Inter-SemiBold.woff2') format('woff2'),
+       url('../assets/fonts/inter/Inter-SemiBold.woff') format('woff'),
+       url('../assets/fonts/inter/Inter-SemiBold.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('../assets/fonts/inter/Inter-Bold.woff2') format('woff2'),
+       url('../assets/fonts/inter/Inter-Bold.woff') format('woff'),
+       url('../assets/fonts/inter/Inter-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Lexend Deca — Regular (400) only */
+@font-face {
+  font-family: 'Lexend Deca';
+  src: url('../assets/fonts/lexend-deca/LexendDeca-Regular.woff2') format('woff2'),
+       url('../assets/fonts/lexend-deca/LexendDeca-Regular.woff') format('woff'),
+       url('../assets/fonts/lexend-deca/LexendDeca-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}

@@ -1,0 +1,55 @@
+:root {
+  /* Default Theme: Blue — matches the Tatua color-scheme widget */
+  --color-primary: #2563EB;
+  --color-secondary: #F3F4F6;
+  --color-text: #111827;
+  --color-link: #2563EB;
+  --color-white: #FFFFFF;
+  --color-border: #E5E7EB;
+
+  /* Dynamic Layout Variables — driven by the theme settings widget */
+  --font-family: 'Asap', Arial, Helvetica, sans-serif;
+  --base-font-size: 16px;
+  --spacing-multiplier: 1;
+  --spacing-unit: calc(1rem * var(--spacing-multiplier));
+  --border-radius: 8px;
+
+  --max-width: 1100px;
+
+  /* Spacing scale used throughout the app — all derived from --spacing-unit
+     so the widget's "Element Spacing" slider scales everything at once. */
+  --space-1: calc(var(--spacing-unit) * 0.25);
+  --space-2: calc(var(--spacing-unit) * 0.5);
+  --space-3: calc(var(--spacing-unit) * 0.75);
+  --space-4: var(--spacing-unit);
+  --space-5: calc(var(--spacing-unit) * 1.5);
+  --space-6: calc(var(--spacing-unit) * 2);
+  --space-7: calc(var(--spacing-unit) * 3);
+
+  /* Type scale (independent of the base font-size slider, for fine hierarchy) */
+  --fs-xs: 0.8125rem;
+  --fs-sm: 0.9375rem;
+  --fs-base: 1rem;
+  --fs-lg: 1.25rem;
+  --fs-xl: 1.75rem;
+
+  /* App-specific tokens not part of the shared Tatua theme */
+  --color-text-muted: #6B7280;
+  --color-danger: #DC2626;
+  --focus-ring: 0 0 0 3px rgba(37, 99, 235, 0.2);
+  --shadow-dialog: 0 10px 15px -3px rgba(0, 0, 0, 0.15);
+}
+
+/* Orange Theme */
+:root.theme-orange {
+  --color-primary: #ea580c;
+  --color-secondary: #fff7ed;
+  --color-link: #ea580c;
+}
+
+/* Purple Theme */
+:root.theme-purple {
+  --color-primary: #7c3aed;
+  --color-secondary: #f5f3ff;
+  --color-link: #7c3aed;
+}

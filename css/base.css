@@ -1,0 +1,110 @@
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+}
+
+/* Base font-size drives all rem units for dynamic scaling, same as Tatua */
+html {
+  font-size: var(--base-font-size);
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-family);
+  font-size: var(--fs-base);
+  color: var(--color-text);
+  background: var(--color-white);
+  -webkit-font-smoothing: antialiased;
+}
+
+button, input, select, textarea {
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+}
+
+:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+  border-radius: var(--border-radius);
+}
+
+.app-shell {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-header {
+  display: flex;
+  align-items: center;
+  padding: var(--space-4) var(--space-6);
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-white);
+}
+
+.app-header__brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-weight: 600;
+  font-size: var(--fs-lg);
+  color: var(--color-text);
+  text-decoration: none;
+}
+
+.app-header__icon {
+  display: block;
+}
+
+.app-main {
+  flex: 1;
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: var(--space-6);
+}
+
+@media (max-width: 640px) {
+  .app-main {
+    padding: var(--space-4);
+  }
+}
+
+.page-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-bottom: var(--space-5);
+  flex-wrap: wrap;
+}
+
+.page-head h1 {
+  font-size: var(--fs-xl);
+  margin: 0 0 var(--space-1);
+}
+
+.page-head p {
+  margin: 0;
+  color: var(--color-text-muted);
+}
+
+.empty-state {
+  border: 1px dashed var(--color-border);
+  border-radius: var(--border-radius);
+  padding: var(--space-7) var(--space-5);
+  text-align: center;
+  color: var(--color-text-muted);
+  background: var(--color-white);
+}
+
+.empty-state strong {
+  display: block;
+  color: var(--color-text);
+  font-size: var(--fs-lg);
+  margin-bottom: var(--space-2);
+}

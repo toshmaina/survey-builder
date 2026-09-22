@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Survey Builder</title>
+  <link rel="stylesheet" href="css/fonts.css" />
+  <link rel="stylesheet" href="css/tokens.css" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/components.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="app-header">
+      <a class="app-header__brand" href="#/surveys">
+        <img class="app-header__icon" src="assets/icons/clipboard.svg" alt="" width="22" height="22" />
+        <span>Survey Builder</span>
+      </a>
+    </header>
+    <main id="app" class="app-main"></main>
+  </div>
+
+  <dialog id="app-dialog" class="dialog"></dialog>
+
+  <!-- Theme Settings Toggle -->
+  <button id="theme-toggle-btn" class="btn btn--icon btn--floating " aria-label="Open theme settings">
+    <img src="assets/icons/settings.svg" alt="" />
+  </button>
+
+  <!-- Theme Settings Widget -->
+  <div class="theme-panel" id="theme-panel" aria-label="Theme Settings">
+    <div class="dialog__head">
+      <h2>Design settings</h2>
+      <button type="button" id="theme-close-btn" class="btn btn--icon" aria-label="Close theme settings">✕</button>
+    </div>
+
+    <div class="theme-panel__body">
+      <div class="field">
+        <label for="color-scheme">Color scheme</label>
+        <select id="color-scheme">
+          <option value="blue">Blue (Default)</option>
+          <option value="orange">Orange</option>
+          <option value="purple">Purple</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="font-family">Font family</label>
+        <select id="font-family">
+          <option value="'Asap', Arial, sans-serif">Asap (Default)</option>
+          <option value="'Lexend Deca', Arial, sans-serif">Lexend Deca</option>
+          <option value="'Inter', Arial, sans-serif">Inter</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="font-size">Font size</label>
+        <input type="range" id="font-size" min="12" max="22" step="1" value="16">
+      </div>
+
+      <div class="field">
+        <label for="spacing">Element spacing</label>
+        <input type="range" id="spacing" min="0.5" max="2" step="0.1" value="1">
+      </div>
+
+      <div class="field">
+        <label for="border-radius">Border radius</label>
+        <input type="range" id="border-radius" min="0" max="24" step="1" value="4">
+      </div>
+    </div>
+  </div>
+
+  <script src="js/theme.js"></script>
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>
