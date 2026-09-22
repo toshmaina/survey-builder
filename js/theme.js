@@ -2,11 +2,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const root = document.documentElement;
 
   const STORAGE_KEYS = {
-    theme: "tatua-color-scheme",
-    fontFamily: "tatua-font-family",
-    fontSize: "tatua-font-size",
-    spacing: "tatua-spacing",
-    borderRadius: "tatua-border-radius",
+    theme: "survey-color-scheme",
+    fontFamily: "survey-font-family",
+    fontSize: "survey-font-size",
+    spacing: "survey-spacing",
+    borderRadius: "survey-border-radius",
   };
 
   // --- 1. LOAD PREFERENCES ON PAGE LOAD ---
