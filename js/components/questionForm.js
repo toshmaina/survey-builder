@@ -8,10 +8,13 @@ export function openQuestionForm(surveyId, existingQuestion = null) {
 
   const bodyHtml = `
     <form id="question-form">
-      <div class="field">
+      <div class="field field--validated">
         <label for="q-label">Question label <span class="required-mark">*</span></label>
-        <input type="text" id="q-label" name="label" value="${existingQuestion?.label ?? ""}" required />
-        <div class="form-error" id="label-error" hidden>A question label is required.</div>
+        <div class="input-with-icon">
+          <input type="text" id="q-label" name="label" value="${existingQuestion?.label ?? ""}" required />
+          <img class="input-icon" src="../../assets/icons/exclamation.png" width="16" height="16" alt="error icon" aria-hidden="true" />
+        </div>
+        <p class="field-error-text">Question label is required!</p>
       </div>
       <div class="field">
         <label for="q-help">Help text</label>
@@ -56,12 +59,13 @@ export function openQuestionForm(surveyId, existingQuestion = null) {
       const form = root.querySelector("#question-form");
       form.addEventListener("submit", (e) => {
         e.preventDefault();
+        // Native HTML5 validity + the CSS :user-invalid rules in
+        // components.css handle showing the red border / icon / message —
+        // this just stops the actual save when the form isn't valid yet.
+        if (!form.checkValidity()) return;
         const data = new FormData(form);
         const label = String(data.get("label") || "").trim();
-        if (!label) {
-          root.querySelector("#label-error").hidden = false;
-          return;
-        }
+        if (!label) return;
         const type = data.get("type");
         const payload = {
           label,
