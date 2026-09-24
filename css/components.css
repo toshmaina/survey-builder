@@ -1,9 +1,5 @@
-/* Buttons */
+
 .btn {
-  /* Reset native OS button chrome — without this, some browsers keep
-     rendering their own (often white) button face underneath whatever
-     background-color we set, which is what was swallowing the primary
-     button's white text. */
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -15,18 +11,24 @@
   padding: var(--space-2) var(--space-4);
   border-radius: var(--border-radius);
   border: 1px solid transparent;
-  background: var(--color-white);
-  color: var(--color-text);
+  background: var(--color-primary);
+  color: #fff;
   cursor: pointer;
   font-weight: 500;
   line-height: 1.2;
   transition: background-color 0.15s ease, box-shadow 0.15s ease, transform 0.1s ease;
 }
 
+.btn:hover {
+  background: color-mix(in srgb, var(--color-primary) 85%, black);
+}
+
+.btn:active {
+  background: color-mix(in srgb, var(--color-primary) 72%, black);
+  transform: translateY(0);
+}
+
 .btn img {
-  /* Icons are SVGs with only a viewBox (no width/height), so as an <img>
-     they'd otherwise fall back to the browser's default replaced-element
-     size (~300px) and blow the button up into a giant square. */
   display: block;
   width: 16px;
   height: 16px;
@@ -34,33 +36,21 @@
 }
 
 .btn--primary {
-  background: var(--color-primary);
-  color: #fff;
   font-weight: 600;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(37, 99, 235, 0.25);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12), 0 2px 8px color-mix(in srgb, var(--color-primary) 35%, transparent);
 }
 .btn--primary img {
-  /* icon is a plain black-stroke SVG loaded via <img>, so it can't pick up
-     currentColor — force it white to match the button's text */
   filter: brightness(0) invert(1);
 }
 .btn--primary:hover {
-  filter: brightness(0.92);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.14), 0 4px 12px rgba(37, 99, 235, 0.3);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.14), 0 4px 12px color-mix(in srgb, var(--color-primary) 40%, transparent);
   transform: translateY(-1px);
 }
 .btn--primary:active {
-  filter: brightness(0.88);
-  transform: translateY(0);
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12);
 }
 
-.btn--secondary {
-  background: var(--color-white);
-  border-color: var(--color-border);
-  color: var(--color-text);
-}
-.btn--secondary:hover { background: var(--color-secondary); }
+
 
 .btn--danger {
   background: var(--color-danger);
@@ -71,12 +61,11 @@
 .btn--icon {
   padding: var(--space-2);
   background: transparent;
+  color: var(--color-text);
   border-color: transparent;
 }
 .btn--icon:hover { background: var(--color-secondary); }
-
-/* Stacked layout: icon on top, label centered underneath — used for the
-   "New survey" button so it reads as a single icon+label tile. */
+.btn--icon:active { background: var(--color-secondary); }
 .btn--stacked {
   flex-direction: column;
   justify-content: center;
@@ -114,13 +103,21 @@
   font-size: var(--fs-sm);
 }
 
+.data-table thead {
+  background-color: var(--color-primary);
+}
+
 .data-table th {
-  color: var(--color-text-muted);
+  color: var(--color-white);
   font-weight: 500;
 }
 
 .data-table tbody tr:last-child td {
   border-bottom: none;
+}
+
+.data-table tbody tr:nth-child(even) {
+  background: var(--color-secondary);
 }
 
 .data-table tbody tr:hover {
@@ -155,6 +152,11 @@
   width: min(560px, calc(100vw - 32px));
   box-shadow: var(--shadow-dialog);
   background: var(--color-white);
+  transition: width 0.15s ease;
+}
+
+.dialog--wide {
+  width: min(760px, calc(100vw - 32px));
 }
 
 .dialog::backdrop {
@@ -243,6 +245,7 @@
 
 .field input[type="range"] {
   width: 100%;
+  accent-color: var(--color-primary);
 }
 
 .checkbox-row,
@@ -278,7 +281,97 @@
   margin-top: var(--space-1);
 }
 
+
+.input-with-icon {
+  position: relative;
+}
+
+.input-with-icon .input-icon {
+  display: none;
+  position: absolute;
+  top: 50%;
+  right: var(--space-2);
+  transform: translateY(-50%);
+  width: 18px;
+  height: 18px;
+  pointer-events: none;
+}
+
+.input-with-icon input:user-invalid {
+  border-color: var(--color-danger);
+  padding-right: calc(var(--space-2) * 2 + 18px);
+}
+
+.input-with-icon input:user-invalid ~ .input-icon {
+  display: block;
+}
+
+.field-error-text {
+  display: none;
+  color: var(--color-danger);
+  font-size: var(--fs-xs);
+  margin-top: var(--space-1);
+}
+
+.field--validated:has(input:user-invalid) .field-error-text {
+  display: block;
+}
+
 /* Preview */
+.preview-layout-toggle {
+  display: flex;
+  width: fit-content;
+  margin-left: auto;
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  margin-bottom: var(--space-4);
+}
+
+.layout-toggle-btn {
+  appearance: none;
+  -webkit-appearance: none;
+  border: none;
+  background: var(--color-white);
+  color: var(--color-text-muted);
+  padding: var(--space-2) var(--space-3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.layout-toggle-btn + .layout-toggle-btn {
+  border-left: 1px solid var(--color-border);
+}
+.layout-toggle-btn img {
+  display: block;
+  width: 16px;
+  height: 16px;
+}
+.layout-toggle-btn:hover:not(.is-active) {
+  background: var(--color-secondary);
+}
+.layout-toggle-btn.is-active {
+  background: var(--color-primary);
+}
+.layout-toggle-btn.is-active img {
+  filter: brightness(0) invert(1);
+}
+
+.preview-questions--two-col {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0 var(--space-6);
+  align-items: start;
+}
+.preview-questions--two-col .preview-question {
+  border-bottom: none;
+  padding: var(--space-3);
+  margin-bottom: var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+}
+
 .preview-question {
   padding-bottom: var(--space-5);
   margin-bottom: var(--space-5);
@@ -288,6 +381,10 @@
   border-bottom: none;
   margin-bottom: 0;
   padding-bottom: 0;
+}
+.preview-questions--two-col .preview-question:last-child,
+.preview-questions--two-col .preview-question:nth-last-child(2) {
+  margin-bottom: 0;
 }
 
 .preview-question__label {
@@ -327,10 +424,6 @@
   margin-bottom: var(--space-3);
 }
 .detail-back:hover { color: var(--color-text); }
-
-/* ---------- Theme Settings Widget — styled to match the rest of the app
-   (same panel look as .dialog, same .field inputs as the survey/question
-   forms, same .btn buttons as everywhere else) ---------- */
 .btn--floating {
   position: fixed;
   bottom: var(--space-5);
