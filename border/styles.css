@@ -1,0 +1,27 @@
+body {
+    padding: 3em;
+    background-color: black;
+}
+
+/* content-box */
+div {
+    background-color: green;
+    width: 80px;
+    padding: 12px 16px;
+    border: 2px solid ;
+    color: white;
+    box-sizing: content-box;
+    height: 30px;
+}
+
+/* border-box */
+div {
+    background-color: #fafafa;
+    color: #000;
+    height: 75px;
+    width: 150px;
+    padding: 4px 8px 6px 5px;
+    margin: 3px 24px;
+    border: 2px solid  red;
+    box-sizing: border-box;
+}

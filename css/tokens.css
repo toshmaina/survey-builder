@@ -6,6 +6,7 @@
   --color-link: #2563EB;
   --color-white: #FFFFFF;
   --color-border: #E5E7EB;
+  --color-danger-light:    #fcb6b6;
 
   /* Dynamic Layout Variables — driven by the theme settings widget */
   --font-family: 'Asap', Arial, Helvetica, sans-serif;

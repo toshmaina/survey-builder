@@ -1,4 +1,18 @@
-
+/**
+ * Seeds localStorage with one sample survey containing a question for every
+ * supported question type (all 22 from js/questionTypes.js).
+ *
+ * How to run it — either works:
+ *   1. Paste this whole file into the browser devtools console on the app's
+ *      page, then hit Enter. It runs immediately.
+ *   2. Add <script src="js/seedSampleSurvey.js"></script> in index.html
+ *      (anywhere before or after main.js — order doesn't matter) and reload
+ *      the page. It's idempotent, so leaving the tag in is safe: it won't
+ *      create duplicates on every reload.
+ *
+ * It only ever touches the one survey it creates (matched by a fixed id) —
+ * every other survey already in localStorage is left exactly as-is.
+ */
 (function seedSampleSurvey() {
   const STORAGE_KEY = "survey_builder_surveys_v1";
   const SEED_SURVEY_ID = "seed-all-question-types";
@@ -68,6 +82,7 @@
     status: "draft",
     createdAt: now,
     updatedAt: now,
+    preferences: { layoutColumns: 2 },
     questions,
   };
 

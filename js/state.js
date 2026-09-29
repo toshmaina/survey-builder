@@ -22,7 +22,12 @@ export function getSurvey(id) {
   return surveys.find((s) => s.id === id) || null;
 }
 
-export function createSurvey({ title, description, status }) {
+function normalizeColumns(value) {
+  const n = Number(value);
+  return [1, 2, 3].includes(n) ? n : 1;
+}
+
+export function createSurvey({ title, description, status, layoutColumns }) {
   const now = new Date().toISOString();
   const survey = {
     id: uid(),
@@ -31,6 +36,7 @@ export function createSurvey({ title, description, status }) {
     status: status || "draft",
     createdAt: now,
     updatedAt: now,
+    preferences: { layoutColumns: normalizeColumns(layoutColumns) },
     questions: [],
   };
   surveys = [survey, ...surveys];
@@ -38,7 +44,7 @@ export function createSurvey({ title, description, status }) {
   return survey;
 }
 
-export function updateSurvey(id, { title, description, status }) {
+export function updateSurvey(id, { title, description, status, layoutColumns }) {
   surveys = surveys.map((s) =>
     s.id === id
       ? {
@@ -46,6 +52,7 @@ export function updateSurvey(id, { title, description, status }) {
           title: title.trim(),
           description: (description || "").trim(),
           status,
+          preferences: { ...s.preferences, layoutColumns: normalizeColumns(layoutColumns) },
           updatedAt: new Date().toISOString(),
         }
       : s
