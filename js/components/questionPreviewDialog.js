@@ -1,8 +1,16 @@
 import { openDialog, closeDialog } from "./dialog.js";
 import { renderPreviewInput } from "../questionTypes.js";
 
+const LAYOUT_OPTIONS = [
+  { cols: 1, label: "Single column", icon: "single-column" },
+  { cols: 2, label: "Two columns", icon: "two-column" },
+  { cols: 3, label: "Three columns", icon: "three-column" },
+];
+
 export function openPreviewDialog(survey) {
   const sorted = [...survey.questions].sort((a, b) => a.order - b.order);
+  // The survey's saved "Layout Columns" preference decides how the preview opens.
+  const preferredCols = survey.preferences?.layoutColumns ?? 1;
 
   const questionsHtml = sorted.length
     ? sorted
@@ -21,25 +29,26 @@ export function openPreviewDialog(survey) {
   const layoutToggleHtml = sorted.length
     ? `
     <div class="preview-layout-toggle" role="group" aria-label="Preview layout">
-      <button type="button" class="layout-toggle-btn is-active" data-columns="1" aria-label="Single column">
-        <img src="assets/icons/single-column.svg" alt="single column" />
-      </button>
-      <button type="button" class="layout-toggle-btn" data-columns="2" aria-label="Two columns">
-        <img src="assets/icons/two-column.svg" alt="two columns" />
-      </button>
+      ${LAYOUT_OPTIONS.map(
+        (o) => `
+      <button type="button" class="layout-toggle-btn ${o.cols === preferredCols ? "is-active" : ""}" data-columns="${o.cols}" aria-label="${o.label}" aria-pressed="${o.cols === preferredCols}">
+        <img src="assets/icons/${o.icon}.svg" alt="" />
+      </button>`
+      ).join("")}
     </div>
   `
     : "";
 
   const bodyHtml = `
     ${layoutToggleHtml}
-    <div class="preview-questions" id="preview-questions">${questionsHtml}</div>
+    <div class="preview-questions" id="preview-questions" data-columns="${preferredCols}">${questionsHtml}</div>
   `;
 
   openDialog({
     title: `Preview — ${survey.title}`,
     bodyHtml,
     footHtml: `<button type="button" class="btn btn--secondary" data-cancel>Close</button>`,
+    dialogClass: "dialog--preview",
     onMount: (root) => {
       root.querySelector("[data-cancel]").addEventListener("click", closeDialog);
 
@@ -48,10 +57,12 @@ export function openPreviewDialog(survey) {
 
       toggleButtons.forEach((btn) => {
         btn.addEventListener("click", () => {
-          const columns = btn.dataset.columns;
-          toggleButtons.forEach((b) => b.classList.toggle("is-active", b === btn));
-          questionsEl.classList.toggle("preview-questions--two-col", columns === "2");
-          root.classList.toggle("dialog--wide", columns === "2");
+          toggleButtons.forEach((b) => {
+            const active = b === btn;
+            b.classList.toggle("is-active", active);
+            b.setAttribute("aria-pressed", String(active));
+          });
+          questionsEl.dataset.columns = btn.dataset.columns;
         });
       });
     },

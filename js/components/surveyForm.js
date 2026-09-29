@@ -3,13 +3,17 @@ import { createSurvey, updateSurvey } from "../state.js";
 
 export function openSurveyForm(existingSurvey = null) {
   const isEdit = !!existingSurvey;
+  const layoutColumns = existingSurvey?.preferences?.layoutColumns ?? 1;
 
   const bodyHtml = `
     <form id="survey-form">
-      <div class="field">
+      <div class="field field--validated">
         <label for="survey-title">Title <span class="required-mark">*</span></label>
-        <input type="text" id="survey-title" name="title" value="${existingSurvey?.title ?? ""}" required />
-        <div class="form-error" id="title-error" hidden>Title is required.</div>
+        <div class="input-with-icon">
+          <input type="text" id="survey-title" name="title" value="${existingSurvey?.title ?? ""}" required pattern=".*\\S.*" />
+          <img class="input-icon" src="../../assets/icons/exclamation.png" alt="exclamation mark icon" aria-hidden="true" />
+        </div>
+        <p class="field-error-text">Title is required!</p>
       </div>
       <div class="field">
         <label for="survey-description">Description</label>
@@ -22,6 +26,19 @@ export function openSurveyForm(existingSurvey = null) {
           <option value="published" ${existingSurvey?.status === "published" ? "selected" : ""}>Published</option>
           <option value="closed" ${existingSurvey?.status === "closed" ? "selected" : ""}>Closed</option>
         </select>
+      </div>
+
+      <div class="form-section">
+        <h3 class="form-section__title">Preferences</h3>
+        <div class="field">
+          <label for="survey-layout-columns">Layout Columns</label>
+          <select id="survey-layout-columns" name="layoutColumns">
+            ${[1, 2, 3]
+              .map((n) => `<option value="${n}" ${n === layoutColumns ? "selected" : ""}>${n} col</option>`)
+              .join("")}
+          </select>
+          <p class="hint">How the questions are laid out in the preview.</p>
+        </div>
       </div>
     </form>
   `;
@@ -40,16 +57,16 @@ export function openSurveyForm(existingSurvey = null) {
       const form = root.querySelector("#survey-form");
       form.addEventListener("submit", (e) => {
         e.preventDefault();
+        // Red border / message come from CSS (:user-invalid) — this only stops the save.
+        if (!form.checkValidity()) return;
         const data = new FormData(form);
         const title = String(data.get("title") || "").trim();
-        if (!title) {
-          root.querySelector("#title-error").hidden = false;
-          return;
-        }
+        if (!title) return;
         const payload = {
           title,
           description: data.get("description"),
           status: data.get("status"),
+          layoutColumns: Number(data.get("layoutColumns")),
         };
         if (isEdit) {
           updateSurvey(existingSurvey.id, payload);

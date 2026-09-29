@@ -1,5 +1,9 @@
-
+/* Buttons */
 .btn {
+  /* Reset native OS button chrome — without this, some browsers keep
+     rendering their own (often white) button face underneath whatever
+     background-color we set, which is what was swallowing the primary
+     button's white text. */
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -11,6 +15,11 @@
   padding: var(--space-2) var(--space-4);
   border-radius: var(--border-radius);
   border: 1px solid transparent;
+  /* Solid primary background by default — every text button (Cancel,
+     Confirm, etc.) shares this unless it opts into .btn--danger or
+     .btn--icon. Hover/active are shades of the SAME primary color,
+     derived with color-mix() so they automatically track whichever
+     theme (blue/orange/purple) is active instead of being hardcoded. */
   background: var(--color-primary);
   color: #fff;
   cursor: pointer;
@@ -29,6 +38,9 @@
 }
 
 .btn img {
+  /* Icons are SVGs with only a viewBox (no width/height), so as an <img>
+     they'd otherwise fall back to the browser's default replaced-element
+     size (~300px) and blow the button up into a giant square. */
   display: block;
   width: 16px;
   height: 16px;
@@ -40,6 +52,8 @@
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12), 0 2px 8px color-mix(in srgb, var(--color-primary) 35%, transparent);
 }
 .btn--primary img {
+  /* icon is a plain black-stroke SVG loaded via <img>, so it can't pick up
+     currentColor — force it white to match the button's text */
   filter: brightness(0) invert(1);
 }
 .btn--primary:hover {
@@ -50,15 +64,29 @@
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12);
 }
 
-
+/* Cancel/close-style buttons — intentionally left as an alias of the base
+   .btn so they share the same primary background + shades as every other
+   text button, per your "all buttons" request. Remove this block (and
+   restore a white/bordered look) if Cancel should read as de-emphasized
+   again later. */
+.btn--secondary {
+}
 
 .btn--danger {
+  /* Kept red on purpose: recoloring destructive actions (delete survey /
+     delete question) to match every other button removes the one visual
+     cue that separates them from routine actions. Say the word and I'll
+     switch this to the primary scale too. */
   background: var(--color-danger);
   color: #fff;
 }
 .btn--danger:hover { filter: brightness(0.9); }
 
 .btn--icon {
+  /* Icon-only utility buttons (row actions, dialog close, settings
+     toggle) stay transparent/subtle rather than solid primary — a grid
+     of small blue squares next to every table row would be visually
+     loud. Say the word if you want these tinted too. */
   padding: var(--space-2);
   background: transparent;
   color: var(--color-text);
@@ -66,6 +94,9 @@
 }
 .btn--icon:hover { background: var(--color-secondary); }
 .btn--icon:active { background: var(--color-secondary); }
+
+/* Stacked layout: icon on top, label centered underneath — used for the
+   "New survey" button so it reads as a single icon+label tile. */
 .btn--stacked {
   flex-direction: column;
   justify-content: center;
@@ -152,11 +183,14 @@
   width: min(560px, calc(100vw - 32px));
   box-shadow: var(--shadow-dialog);
   background: var(--color-white);
-  transition: width 0.15s ease;
 }
 
-.dialog--wide {
-  width: min(760px, calc(100vw - 32px));
+.dialog--preview {
+  /* the preview gets most of the screen so 2/3-column layouts have room */
+  width: min(1200px, calc(100vw - 48px));
+}
+.dialog--preview .dialog__body {
+  max-height: 75vh;
 }
 
 .dialog::backdrop {
@@ -281,7 +315,13 @@
   margin-top: var(--space-1);
 }
 
-
+/* ---------- CSS-only validation ----------
+   No JS toggles any of this — it's driven entirely by the browser's native
+   constraint validation via :user-invalid, which only kicks in once the
+   user has actually interacted with the field (or tried to submit), not
+   on first render. Needs a fairly modern browser (:user-invalid: Firefox
+   88+, Safari 16.4+, Chrome 119+; :has(): Chrome 105+, Safari 15.4+,
+   Firefox 121+) — older browsers just silently keep the plain border. */
 .input-with-icon {
   position: relative;
 }
@@ -299,6 +339,7 @@
 
 .input-with-icon input:user-invalid {
   border-color: var(--color-danger);
+  background-color: var(--color-danger-light);
   padding-right: calc(var(--space-2) * 2 + 18px);
 }
 
@@ -315,6 +356,33 @@
 
 .field--validated:has(input:user-invalid) .field-error-text {
   display: block;
+}
+
+/* Red border on every invalid field (not just the ones with the icon/message) */
+.field input:user-invalid,
+.field textarea:user-invalid,
+.field select:user-invalid {
+  border-color: var(--color-danger);
+}
+.field input:user-invalid:focus-visible,
+.field textarea:user-invalid:focus-visible,
+.field select:user-invalid:focus-visible {
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-danger) 30%, transparent);
+}
+
+/* Grouped block inside a form (e.g. the survey "Preferences" section) */
+.form-section {
+  margin-top: var(--space-5);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--color-border);
+}
+.form-section__title {
+  margin: 0 0 var(--space-3);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
 }
 
 /* Preview */
@@ -355,21 +423,9 @@
   background: var(--color-primary);
 }
 .layout-toggle-btn.is-active img {
+  /* icon is a plain black-stroke SVG loaded via <img>, so it can't pick up
+     currentColor — force it white to match the active state */
   filter: brightness(0) invert(1);
-}
-
-.preview-questions--two-col {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 0 var(--space-6);
-  align-items: start;
-}
-.preview-questions--two-col .preview-question {
-  border-bottom: none;
-  padding: var(--space-3);
-  margin-bottom: var(--space-4);
-  border: 1px solid var(--color-border);
-  border-radius: var(--border-radius);
 }
 
 .preview-question {
@@ -382,9 +438,34 @@
   margin-bottom: 0;
   padding-bottom: 0;
 }
-.preview-questions--two-col .preview-question:last-child,
-.preview-questions--two-col .preview-question:nth-last-child(2) {
+
+/* Multi-column preview — driven by data-columns (set from the survey's
+   "Layout Columns" preference, changeable via the toggle). These rules sit
+   AFTER the base .preview-question rules on purpose so they win ties. */
+.preview-questions[data-columns="2"],
+.preview-questions[data-columns="3"] {
+  display: grid;
+  gap: var(--space-4) var(--space-5);
+  align-items: start;
+}
+.preview-questions[data-columns="2"] { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.preview-questions[data-columns="3"] { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+.preview-questions[data-columns="2"] .preview-question,
+.preview-questions[data-columns="3"] .preview-question {
+  /* a divider line split across grid cells looks wrong, so each question
+     becomes its own bordered card and the grid gap handles spacing */
   margin-bottom: 0;
+  padding: var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+}
+
+@media (max-width: 720px) {
+  .preview-questions[data-columns="2"],
+  .preview-questions[data-columns="3"] {
+    grid-template-columns: 1fr;
+  }
 }
 
 .preview-question__label {
@@ -424,6 +505,10 @@
   margin-bottom: var(--space-3);
 }
 .detail-back:hover { color: var(--color-text); }
+
+/* ---------- Theme Settings Widget — styled to match the rest of the app
+   (same panel look as .dialog, same .field inputs as the survey/question
+   forms, same .btn buttons as everywhere else) ---------- */
 .btn--floating {
   position: fixed;
   bottom: var(--space-5);
