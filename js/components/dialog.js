@@ -1,16 +1,14 @@
 const dialogEl = document.getElementById("app-dialog");
 
 /**
- * Opens the single shared dialog with the given inner HTML.
  * @param {Object} opts
  * @param {string} opts.title
  * @param {string} opts.bodyHtml
  * @param {string} [opts.footHtml]
- * @param {string} [opts.dialogClass] - extra class(es) for this open only (e.g. "dialog--preview")
- * @param {(root: HTMLElement) => void} [opts.onMount] - called after the content is in the DOM
+ * @param {string} [opts.dialogClass]
+ * @param {(root: HTMLElement) => void} [opts.onMount]
  */
 export function openDialog({ title, bodyHtml, footHtml = "", dialogClass = "", onMount }) {
-  // Reset every time, so a modifier class from one dialog never leaks into the next
   dialogEl.className = ("dialog " + dialogClass).trim();
   dialogEl.innerHTML = `
     <div class="dialog__head">

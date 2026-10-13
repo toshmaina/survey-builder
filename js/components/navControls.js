@@ -6,13 +6,17 @@ export function renderNavControls(container, { surveys, currentId }) {
   const next = index < surveys.length - 1 ? surveys[index + 1] : null;
 
   container.innerHTML = `
-    <div class="nav-controls">
-      <button type="button" class="btn btn--secondary" ${prev ? "" : "disabled"} data-nav="prev">
-        <img src="assets/icons/chevron-left.svg" alt="" /> Previous
+    <div class="nav-controls" style="display: flex; justify-content: space-between; align-items: center; margin-top: var(--space-6); padding-top: var(--space-4); border-top: 1px solid var(--color-border);">
+      <button type="button" class="btn btn--outline" ${prev ? "" : "disabled"} data-nav="prev">
+        <img src="assets/icons/chevron-left.svg" alt="chevron left" /> Previous Survey
       </button>
-      <span class="nav-controls__position">Survey ${index + 1} of ${surveys.length}</span>
-      <button type="button" class="btn btn--secondary" ${next ? "" : "disabled"} data-nav="next">
-        Next <img src="assets/icons/chevron-right.svg" alt="" />
+
+      <span class="nav-controls__position" style="font-size: var(--fs-base); font-weight: 600; color: var(--color-text);">
+        Survey ${index + 1} of ${surveys.length}
+      </span>
+
+      <button type="button" class="btn btn--outline" ${next ? "" : "disabled"} data-nav="next">
+        Next Survey <img src="assets/icons/chevron-right.svg" alt="chevron right" />
       </button>
     </div>
   `;
