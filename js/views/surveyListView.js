@@ -25,8 +25,8 @@ export function renderSurveyListView(root) {
     const surveys = getSurveys();
     renderTable(tableEl, {
       columns: [
-        { key: "title", label: "Title" },
-        { key: "status", label: "Status" },
+        { key: "title", label: "Title", sortable: true },
+        { key: "status", label: "Status", sortable: true },
         { key: "questions", label: "Questions" },
         { key: "updatedAt", label: "Updated" },
       ],

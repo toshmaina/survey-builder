@@ -37,6 +37,18 @@
   transform: translateY(0);
 }
 
+.btn:disabled {
+  background: var(--color-secondary);
+  color: var(--color-text-muted);
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+}
+.btn:disabled img {
+  filter: none;
+  opacity: 0.5;
+}
+
 .btn img {
   /* Icons are SVGs with only a viewBox (no width/height), so as an <img>
      they'd otherwise fall back to the browser's default replaced-element
@@ -110,6 +122,170 @@
 .btn--stacked span {
   font-size: var(--fs-sm);
   line-height: 1.1;
+}
+
+/* Data table: toolbar (Search form + Sorting/Filters/Columns buttons),
+   the Filters/Sorting/Columns dialogs, sortable column headers, and the
+   paginated footer. */
+.data-table__toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+  margin-bottom: var(--space-4);
+}
+
+.data-table__toolbar-controls {
+  flex: 1;
+  min-width: 300px;
+}
+
+.data-table__toolbar-actions {
+  display: flex;
+  gap: var(--space-2);
+  flex-shrink: 0;
+}
+
+/* Search form: Column / Relation / Value + Search button. Each of the first
+   three is a .field--validated so an empty submit shows the same red
+   border/icon/message as the question form. align-items:flex-start keeps
+   the controls lined up at the top even when one of them grows taller to
+   show its error text. */
+.data-table__search-form {
+  display: flex;
+  gap: var(--space-2);
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+.data-table__search-form .field {
+  min-width: 140px;
+}
+.data-table__search-form select,
+.data-table__search-form input {
+  width: 100%;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+  background: var(--color-white);
+  font-size: var(--fs-sm);
+}
+.data-table__search-form .btn {
+  flex-shrink: 0;
+}
+
+/* Ghost button — used for Columns, which the design shows as plain
+   icon+text with no colored fill, unlike Sorting/Filters/Search. */
+.btn--ghost {
+  background: transparent;
+  color: var(--color-text);
+  box-shadow: none;
+}
+.btn--ghost:hover {
+  background: var(--color-secondary);
+}
+.btn--ghost:active {
+  background: var(--color-secondary);
+}
+.btn--ghost img {
+  filter: none;
+}
+
+/* Rows inside the Filters / Sorting dialogs */
+.dialog-rows {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.dialog-row {
+  display: flex;
+  gap: var(--space-2);
+  align-items: center;
+}
+.dialog-row select,
+.dialog-row input {
+  flex: 1;
+  min-width: 0;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+  background: var(--color-white);
+  font-size: var(--fs-sm);
+}
+
+/* Columns dialog: one checkbox row per column */
+.columns-menu-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+.columns-menu-list .checkbox-row {
+  gap: var(--space-2);
+}
+.columns-menu-icon {
+  width: 16px;
+  height: 16px;
+}
+
+/* Sortable column headers */
+.data-table th.is-sortable {
+  cursor: pointer;
+  user-select: none;
+}
+.data-table th.is-sortable:hover {
+  background: color-mix(in srgb, var(--color-primary) 85%, black);
+}
+.th-sort-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+.sort-indicator-icon {
+  width: 12px;
+  height: 12px;
+  opacity: 0.6;
+}
+.sort-indicator-icon[data-active="true"] {
+  opacity: 1;
+}
+
+/* Table footer: pagination */
+.data-table__pagination {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-top: var(--space-4);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--color-border);
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.data-table__pagination-center {
+  display: flex;
+  align-items: center;
+  width: max-content;
+  gap: var(--space-5);
+}
+.data-table__pagination-center .field {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: 0;
+}
+.data-table__pagination-center select {
+  padding: var(--space-1) var(--space-2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+  background: var(--color-white);
+}
+
+.data-table__page-info {
+  font-size: var(--fs-sm);
+  font-weight: 500;
+  color: var(--color-text);
+  white-space: nowrap;
 }
 
 /* Table */
@@ -337,13 +513,14 @@
   pointer-events: none;
 }
 
-.input-with-icon input:user-invalid {
+.input-with-icon input:user-invalid,
+.input-with-icon select:user-invalid {
   border-color: var(--color-danger);
-  background-color: var(--color-danger-light);
   padding-right: calc(var(--space-2) * 2 + 18px);
 }
 
-.input-with-icon input:user-invalid ~ .input-icon {
+.input-with-icon input:user-invalid ~ .input-icon,
+.input-with-icon select:user-invalid ~ .input-icon {
   display: block;
 }
 
