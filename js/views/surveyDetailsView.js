@@ -55,8 +55,8 @@ export function renderSurveyDetailsView(root, surveyId) {
 
     renderTable(tableEl, {
       columns: [
-        { key: "label", label: "Question" },
-        { key: "type", label: "Type" },
+        { key: "label", label: "Question", sortable: true },
+        { key: "type", label: "Type", sortable: true },
         { key: "config", label: "Configuration" },
         { key: "required", label: "Required" },
       ],
